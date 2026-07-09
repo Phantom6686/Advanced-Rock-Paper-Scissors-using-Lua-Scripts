@@ -1,0 +1,109 @@
+function level_Rounder(x)
+	if (x % 2 >= 0.5 ) then
+		return math.ceil(x)
+	else
+		return math.floor(x)
+	end
+end
+
+Game_Table = { "Rock", -- This is a Table Containing The Table Game_Table's elements
+"Paper",
+"Scissors"
+}
+
+
+--Below are the first Input statements as well as Other Global Functions for the game
+io.write("This is a simple game of rock ,paper scissors : Choose the Number of Rounds You wish to play : ")
+level = io.read("n") -- Reads the Current Level in Number Format Only
+level = level_Rounder(level) --Applies the Function Begining the Script to the level the User provided.
+max_level = level -- Reads the converted level above as the max level for the game
+min_level = (max_level/max_level) -1 --This value was made to be this since it would be used as output, but would be changed in the while statement below
+win_Cap = (level_Rounder(level/2)) -- Simply the Max-number of times the while loop below would run
+
+
+function Win_Or_LoseRock(x)
+  while com_Decision == Game_Table[1] do
+  if x == Game_Table[1] then 
+    win_Cap = win_Cap + 1
+    print("Rock against Rock is a Draw my Guy")
+    io.write(" You aint ROX , do what you must : ")
+    x = io.read("n")
+    Win_Or_LoseRock(x)
+    elseif x == Game_Table[2] then
+      print("Paper against Rock gives a fine Shish Kebab")
+      io.write("Such a flat win, such was paper, Go again Roger: ")
+      x = io.read("n")
+      Win_Or_LoseRock(x)
+    elseif x == Game_Table[3] then
+      print("I guess Rox was too much for you.")
+      io.write("You lost this one , but don't lose it however : ")
+      x = io.read("n")
+      Win_Or_LoseRock(x)
+    end
+      math.randomseed(os.time())
+COM = math.random(3)
+com_Decision = Game_Table[COM]
+ min_level = min_level + 1
+ io.write("You selected "..Game_Table[x].." for round number "..min_level.." whilst COM chose "..com_Decision.."")
+ x = io.read("n")
+  end
+end
+function Win_Or_LosePaper(x)
+  while com_Decision == Game_Table[2] do
+  if x == Game_Table[1] then 
+    print("You got wrapped in Paper ")
+    io.write(" COM said you can have the paper since he made you Run : ")
+    x = io.read("n")
+    elseif x == Game_Table[2] then
+        win_Cap = win_Cap + 1
+      print("It's a Draw Paper meets Paper")
+      io.write(" You have another chance don't waste it: ")
+      x = io.read("n")
+    elseif x == Game_Table[3] then
+      print("Who could have guessed you would have sliced him up")
+      io.write("You won with Scissors don't let this chance go to waste : ")
+      x = io.read("n")
+    end
+      math.randomseed(os.time())
+COM = math.random(3)
+com_Decision = Game_Table[COM]
+ min_level = min_level + 1
+ io.write("You selected "..Game_Table[x].." for round number "..min_level.." whilst COM chose "..com_Decision.."")
+ x = io.read("n")
+  end
+end
+
+
+
+
+
+
+function decision_Pointer(x)
+ while (min_level + 1) <= win_Cap do
+ if x  then
+  x = Game_Table[x]
+  print(x)
+ end
+ math.randomseed(os.time())
+COM = math.random(3)
+com_Decision = Game_Table[COM]
+ min_level = min_level + 1
+ Win_Or_LoseRock(x)
+ io.write("You selected "..x.." for round number "..min_level.." whilst COM chose "..com_Decision.."")
+ x = io.read("n")
+end
+ end
+
+
+Win_Or_LosePaper(Decision)
+Win_Or_LoseRock(Decision)
+print("So You Have Chosen a Game of "..level.." rounds ")
+print("To win you must Obtain Victory for at least "..win_Cap.." rounds")
+io.write("Choose (1) for Rock, (2) for Paper, and (3) for Scissors :")
+Decision = io.read("n")
+decision_Pointer(Decision)
+
+
+
+
+--[[local function winOrLose(Guess) local gameCounter = 0 while if comTable[comGuess] == "Rock" and Guess == "Scissors" then print("You've lost :") elseif comTable[comGuess] == "Rock" and Guess == "Rock" then print("You've drawn :") elseif comTable[comGuess] == "Rock" and Guess == "Paper" then print("You've won :") elseif comTable[comGuess] == "Scissors" and Guess == "Paper" then print("You've lost :") elseif comTable[comGuess] == "Scissors" and Guess == "Scissors" then print("You've drawn :") elseif comTable[comGuess] == "Scissors" and Guess == "Rock" then print("You've lost :") elseif comTable[comGuess] == "Paper" and Guess == "Rock" then print("You've lost :") elseif comTable[comGuess] == "Paper" and Guess == "Paper" then print("You've Drawn :") elseif comTable[comGuess] == "Paper" and Guess == "Scissors" then print("You've Won :") end end end winOrLose()]]
