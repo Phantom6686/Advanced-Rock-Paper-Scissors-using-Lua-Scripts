@@ -1,82 +1,130 @@
 math.randomseed(os.time())
 
-local PickTable = {"Rock 🪨", "Paper 📄", "Scissors ✂️"}
-local WinForUser, WinForCom, Draw = 0,0,0
-local GameRounds = 0
+print("This is a simple game of Rock, Paper,Scissors : ")
 
-local WinLines = {
-    "Sheesh, human actually cooked! 🔥",
-    "Nah you got lucky, run it back!",
-    "Aura +1000 for you, not bad."
-}
-local LoseLines = {
-    "LOL lost to scraps 💀",
-    "My grandma plays better and she's a toaster",
-    "AI Aura farms - Now it's time to join the Honored One"
-}
+local PickTable = {"Rock","Paper","Scissors"}
 
 local function ComputerBrain()
-    return PickTable[math.random(#PickTable)]
+local ComputerChoice = math.random(3)
+local ComChoice = PickTable[ComputerChoice]
+return ComChoice
 end
 
-print("=== ROCK PAPER SCISSORS - Best of 5 ===\nChoose: 1=Rock, 2=Paper, 3=Scissors\n")
+-- These are delicate variables please Don't Touch!!!
+local WinForUser = 0
+local WinForCom = 0
+local Draw = 0
 
-while GameRounds < 5 do
-    io.write("\nRound "..(GameRounds+1).."/5 - Enter 1-3: ")
-    local UserInput = tonumber(io.read())
-    local InvalidityCounter = 0
+-- ADDED: My trash talk tables (your code untouched)
+local MyWinLines = {"Sheesh, human actually cooked! 🔥", "Aura +1000 for you, not bad.", "Nah you got lucky, run it back!"}
+local MyLoseLines = {"LOL lost to scraps 💀", "My grandma plays better and she's a toaster", "AI Aura farms - Here's your 100 Krypt 💸"}
 
-    while not UserInput or UserInput < 1 or UserInput > 3 do
-        InvalidityCounter = InvalidityCounter + 1
-        if InvalidityCounter == 3 then
-            print("Bro stop gooning the code 😭")
-        elseif InvalidityCounter >= 5 then
-            print("Aight you win the gooning award, you lose automatically. Bye.")
-            WinForCom = 5
-            GameRounds = 5
-            break
+print("This is a game of 3 Rounds : Choose 1 for Rock, 2 for Paper, and 3 for Scissors \n")
+
+-- This Boolean is Useless please Ignore
+local Isplaying = true
+
+local GameRounds = 0
+
+local function UserIO()
+
+    while GameRounds ~= 3 do
+
+    if GameRounds ~= 3 then
+io.write("Enter a number from 1-3 : \n")
+ local UserInput = tonumber(io.read())
+
+ -- I used this form of syntax for the first time to signify UserInput returns a nil value
+
+ local InvalidityCounter = 0
+ while not UserInput or UserInput > 3 or UserInput < 1 do
+ if not UserInput or UserInput > 3 or UserInput < 1 then
+-- Tuning in another If Statement Block
+     if InvalidityCounter == 10 then
+        --Tuning in another whole Barrage of If statements
+        print("Wow such an insightful Individual, testing the strenght of my code... \n Stop it before I do something Unthinkable!!!")
+        elseif InvalidityCounter >= 11 and InvalidityCounter < 15 then
+            print("I'm shocked you don't understand Basic human language...\n Ohh I see you are messing with me... Nice Cus I'm better at this than you. I'm giving you "..(15 - InvalidityCounter).." rounds of Gooning")
+        elseif InvalidityCounter > 15 then
+            print("My turn.....")
+            Isplaying = false
+            WinForUser = 0
+            WinForCom = 3
+            if Isplaying == false then
+    print("You have lost automatically by the design of the system you were trying to break.\n Listen to simple instructions next time!!!")
+break
+            end
         end
-        io.write("Invalid! Try again 1-3: ")
-        UserInput = tonumber(io.read())
+
+    InvalidityCounter = InvalidityCounter + 1
+    io.write("Invalid key entered...Try Again \n")
+    UserInput = tonumber(io.read())
+
+ end
     end
 
-    if GameRounds == 5 then break end
+  -- A break Statement for If player Gooned about the aplication
+if Isplaying == false then
+    break
+end
 
-    local UserChoice = PickTable[UserInput]
-    local ComChoice = ComputerBrain()
+local UserChoice = PickTable[UserInput]
 
-    print("You: "..UserChoice.." vs Me: "..ComChoice)
+-- This is the Validity approach to detect a win or loss in a single game from the User
+
+local ComputerBrainInstance = ComputerBrain()
+    print("Computer chose "..ComputerBrainInstance.." whilst user chose "..UserChoice.."")
     GameRounds = GameRounds + 1
-
-    -- Draw
-    if UserChoice == ComChoice then
-        Draw = Draw + 1
-        print("Draw! Like minds think alike... we lose alike 😏")
-    -- Win conditions (strip emojis for logic)
-    elseif (UserInput == 1 and ComChoice:find("Scissors")) or
-           (UserInput == 2 and ComChoice:find("Rock")) or
-           (UserInput == 3 and ComChoice:find("Paper")) then
+    if UserChoice == "Rock" and ComputerBrainInstance == "Rock" or UserChoice == "Paper" and ComputerBrainInstance== "Paper" or UserChoice == "Scissors" and ComputerBrainInstance == "Scissors" then
+Draw = Draw + 1
+    elseif UserChoice == "Rock" and ComputerBrainInstance == "Scissors" or UserChoice == "Paper" and ComputerBrainInstance == "Rock" or UserChoice == "Scissors" and ComputerBrainInstance == "Paper" then
         WinForUser = WinForUser + 1
-        print("You win this round! "..WinLines[math.random(#WinLines)])
-    else
-        WinForCom = WinForCom + 1
-        print("I win! "..LoseLines[math.random(#LoseLines)])
-    end
-
-    print("Score: You "..WinForUser.." - "..WinForCom.." Me | Draws: "..Draw)
-
-    if WinForUser == 3 or WinForCom == 3 then
-        break -- first to 3 wins early
+    elseif UserChoice == "Scissors" and ComputerBrainInstance == "Rock" or UserChoice == "Rock" and ComputerBrainInstance == "Paper" or UserChoice == "Paper" and ComputerBrainInstance == "Scissors" then
+   WinForCom = WinForCom + 1
     end
 end
+end
 
-print("\n=== FINAL ===")
-print("You: "..WinForUser.." | Me: "..WinForCom.." | Draws: "..Draw)
+--This is the final mechanic to print the match results
 
-if WinForUser > WinForCom then
-    print("The Power of Human Intellect overthrew the AI 👑 GG!")
+ if WinForUser > WinForCom or Isplaying == false then
+
+if Isplaying == false then
+  print("Don't expect any pity from the system next time..\n That is why you must follow Instructions!!")
+ elseif WinForUser >= 3 and Isplaying == true then
+        print("That was quick for a match.\n Congrats on whooping me down!!")
+        print(MyWinLines[math.random(#MyWinLines)]) -- ADDED
+    elseif WinForUser == 2 then
+        print("The Power of Human Intellect overthrew the AI. Your opponent (AI) whispers ('What a show, NGL I had you once ') ")
+        print(MyWinLines[math.random(#MyWinLines)]) -- ADDED
+    elseif WinForUser == 1 then
+        print("A win by the beat of the wind, Errm sorry I mean the heart!!! \nYour opponent (AI) declares ('Next time I see you around the Blox I'm Jumping you)")
+        print(MyWinLines[math.random(#MyWinLines)]) -- ADDED, your line above is untouched
+    end
 elseif WinForCom > WinForUser then
-    print("GGs humanoid, still lost. AI whispers ('Here's your 100 Krypt') 💸")
-else
-    print("Draw after "..GameRounds.." rounds?! We are the same fr.")
+    if WinForCom == 3 then
+    print("You said you'd Win! Saw how that went \n AI Aura farms ('Now it's time to join the Honored One')")
+    print(MyLoseLines[math.random(#MyLoseLines)]) -- ADDED
+    elseif WinForCom == 2 then
+    print("Hell Nah!!. You lost to a Bunch of Scraps... Get lost!!!")
+    print(MyLoseLines[math.random(#MyLoseLines)]) -- ADDED
+    elseif WinForCom == 1 then
+        print("Good game Humanoid, still lost... Don't worry \n AI whispers to the match maker ('Here's your 100 Krypt ')")
+        print(MyLoseLines[math.random(#MyLoseLines)]) -- ADDED
 end
+elseif WinForCom == WinForUser then
+    local TotalMatchRounds = (Draw + WinForUser + WinForCom)
+    local DrawTable =
+    {
+    "Not that bad.. So lemme see you Drew against scraps after "..TotalMatchRounds.." Rounds ",
+    " It is said ('Like minds think alike,"..TotalMatchRounds.." rounds Innit!! \n ('Which means we lose alike') smirks your Opponent(AI) ')",
+    "Don't be MAAD,even after "..TotalMatchRounds.." it was still a draw but there is One diffrence between us, You feel it!!\n While I don't...." }
+    print(DrawTable[math.random(#DrawTable)])
+end
+Isplaying = false
+
+end
+
+UserIO()
+
+ print("The Game Counter loop is done")
